@@ -2,6 +2,9 @@ package deferFunc
 
 import (
 	"fmt"
+	"io"
+	"net/http"
+	"os"
 	"testing"
 )
 
@@ -68,4 +71,127 @@ func TestClose01(t *testing.T) {
 		t2 := t
 		defer t2.Close01()
 	}
+
+}
+
+func TestDoHttp(t *testing.T) {
+	openFile03()
+}
+
+func doGet() error {
+	res, err := http.Get("http://www.google.com")
+
+	if res != nil {
+		defer res.Body.Close()
+	}
+
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func openFile() error {
+	f, err := os.Open("book.txt")
+	if err != nil {
+		return err
+	}
+
+	if f != nil {
+		defer func() {
+			if err := f.Close(); err != nil {
+				// log etc
+			}
+		}()
+	}
+
+	// ..code...
+
+	return nil
+}
+
+func openFile01() (err error) {
+	f, err := os.Open("book.txt")
+	if err != nil {
+		return err
+	}
+
+	if f != nil {
+		defer func() {
+			if ferr := f.Close(); ferr != nil {
+				// log etc
+				err = ferr
+			}
+		}()
+	}
+
+	// ..code...
+
+	return nil
+}
+
+func openFile02() (err error) {
+
+	file, err := os.Open("book.text")
+
+	if err != nil {
+		return err
+	}
+
+	if file != nil {
+		defer func() {
+			if err := file.Close(); err != nil {
+				fmt.Printf("defer close book.txt err %v\n", err)
+			}
+		}()
+	}
+
+	file, err = os.Open("another-book.txt")
+	if err != nil {
+		return err
+	}
+	if file != nil {
+		defer func() {
+			if err := file.Close(); err != nil {
+				fmt.Printf("defer close another-book.txt err %v\n", err)
+			}
+		}()
+	}
+	return nil
+}
+
+/**
+当延迟函数执行时，只有最后一个变量会被用到，因此，f 变量 会成为最后那个资源 (another-book.txt)。而且两个 defer 都会将这个资源作为最后的资源来关闭
+*/
+//解决方案：
+
+func openFile03() (err error) {
+	f, err := os.Open("book.txt")
+	if err != nil {
+		return err
+	}
+	if f != nil {
+		defer func(f io.Closer) {
+			if err := f.Close(); err != nil {
+				fmt.Printf("defer close book.txt err %v\n", err)
+			}
+		}(f)
+	}
+
+	// ..code...
+
+	f, err = os.Open("another-book.txt")
+	if err != nil {
+		return err
+	}
+	if f != nil {
+		defer func(f io.Closer) {
+			if err := f.Close(); err != nil {
+				fmt.Printf("defer close another-book.txt err %v\n", err)
+			}
+		}(f)
+	}
+
+	return nil
 }
