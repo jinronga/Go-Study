@@ -3,9 +3,9 @@ package repository
 import (
 	"context"
 	"github.com/go-study/go-backend/domain"
+	"github.com/go-study/go-backend/mongo"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
-	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 

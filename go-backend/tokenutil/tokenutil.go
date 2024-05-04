@@ -2,9 +2,9 @@ package tokenutil
 
 import (
 	"fmt"
+	"github.com/go-study/go-backend/domain"
 	"time"
 
-	"github.com/amitshekhariitbhu/go-backend-clean-architecture/domain"
 	jwt "github.com/golang-jwt/jwt/v4"
 )
 

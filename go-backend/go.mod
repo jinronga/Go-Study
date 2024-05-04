@@ -3,12 +3,10 @@ module github.com/go-study/go-backend
 go 1.19
 
 require (
-	github.com/amitshekhariitbhu/go-backend-clean-architecture v0.0.0-20240107161536-406e06644f5a
 	github.com/gin-gonic/gin v1.9.1
 	github.com/golang-jwt/jwt/v4 v4.5.0
 	github.com/spf13/viper v1.18.2
 	go.mongodb.org/mongo-driver v1.11.1
-
 )
 
 require (
