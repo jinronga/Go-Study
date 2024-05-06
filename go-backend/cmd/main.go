@@ -7,6 +7,11 @@ import (
 	"time"
 )
 
+// @title			启动文件
+// @version		1.0
+// @description	启动文件
+// @host			localhost:8080
+// @BasePath
 func main() {
 
 	app := bootstrap.App()

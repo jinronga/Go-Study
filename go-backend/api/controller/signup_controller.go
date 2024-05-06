@@ -14,6 +14,13 @@ type SignupController struct {
 	Env           *bootstrap.Env
 }
 
+// Sugnup godoc
+//
+//	@Summary		Signup
+//	@Description	Signup
+//	@Tags			Signup
+//	@Router
+//	@Accept	json
 func (sc *SignupController) Signup(c *gin.Context) {
 	var request domain.SignupRequest
 
