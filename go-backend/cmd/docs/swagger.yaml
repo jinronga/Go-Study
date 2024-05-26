@@ -1,0 +1,8 @@
+host: localhost:8080
+info:
+  contact: {}
+  description: 启动文件
+  title: 启动文件
+  version: "1.0"
+paths: {}
+swagger: "2.0"
